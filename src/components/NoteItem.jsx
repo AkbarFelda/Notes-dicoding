@@ -1,29 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { showFormattedDate } from '../utils';
 import NoteActionButton from './NoteActionButton';
+import LanguageContext from '../contexts/LanguageContext';
 
+/**
+ * Highlight keyword di dalam teks
+ */
 function highlightText(text = '', keyword = '') {
-  if (!keyword || !keyword.trim()) {
-    return text;
-  }
+  if (!keyword || !keyword.trim()) return text;
 
   const escapedKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const regex = new RegExp(`(${escapedKeyword})`, 'gi');
   const parts = text.split(regex);
 
-  return parts.map((part, index) => {
-    if (part.toLowerCase() === keyword.toLowerCase()) {
-      return <mark key={`${part}-${index}`}>{part}</mark>;
-    }
-
-    return <React.Fragment key={`${part}-${index}`}>{part}</React.Fragment>;
-  });
+  return parts.map((part, index) =>
+    part.toLowerCase() === keyword.toLowerCase()
+      ? <mark key={`${part}-${index}`}>{part}</mark>
+      : <React.Fragment key={`${part}-${index}`}>{part}</React.Fragment>
+  );
 }
 
 function NoteItem({ note, onDelete, onArchive, onSelect, searchKeyword }) {
-  if (!note) {
-    return null;
-  }
+  const { language } = useContext(LanguageContext);
+
+  if (!note) return null;
 
   const handleSelect = () => {
     if (typeof onSelect === 'function') {
@@ -68,15 +68,17 @@ function NoteItem({ note, onDelete, onArchive, onSelect, searchKeyword }) {
           onClick={() => onDelete(note.id)}
           dataTestId="note-item-delete-button"
         >
-          Hapus
+          {language === 'id' ? 'Hapus' : 'Delete'}
         </NoteActionButton>
 
         <NoteActionButton
           variant="archive"
-          onClick={() => onArchive(note.id)}
+          onClick={() => onArchive(note.id, note.archived)}
           dataTestId="note-item-archive-button"
         >
-          {note.archived ? 'Pindahkan' : 'Arsipkan'}
+          {note.archived
+            ? (language === 'id' ? 'Pindahkan' : 'Unarchive')
+            : (language === 'id' ? 'Arsipkan' : 'Archive')}
         </NoteActionButton>
       </div>
     </div>

@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import NoteItem from './NoteItem';
+import { useNavigate } from 'react-router-dom';
+import LanguageContext from '../contexts/LanguageContext';
 
 function getGroupKey(date) {
   const parsedDate = new Date(date);
   const month = parsedDate.toLocaleString('id-ID', { month: 'long' });
   const year = parsedDate.getFullYear();
-
   return `${month}-${year}`;
 }
 
@@ -17,11 +18,7 @@ function formatGroupTitle(groupKey) {
 function groupNotesByMonthYear(notes) {
   return notes.reduce((groups, note) => {
     const groupKey = getGroupKey(note.createdAt);
-
-    if (!groups[groupKey]) {
-      groups[groupKey] = [];
-    }
-
+    if (!groups[groupKey]) groups[groupKey] = [];
     groups[groupKey].push(note);
     return groups;
   }, {});
@@ -31,22 +28,26 @@ function NotesList({
   notes,
   onDelete,
   onArchive,
-  onSelect,
   searchKeyword,
   dataTestId = 'notes-list',
 }) {
+  const { language } = useContext(LanguageContext);
+  const navigate = useNavigate();
+
   const safeNotes = Array.isArray(notes) ? notes : [];
   const validNotes = safeNotes.filter(Boolean);
   const hasNotes = validNotes.length > 0;
 
+  const handleSelectNote = (note) => {
+    if (!note?.id) return;
+    navigate(`/notes/${note.id}`, { state: { note } });
+  };
+
   if (!hasNotes) {
     return (
       <div className="notes-list" data-testid={dataTestId}>
-        <p
-          className="notes-list__empty-message"
-          data-testid={`${dataTestId}-empty`}
-        >
-          Tidak ada catatan
+        <p className="notes-list__empty-message" data-testid={`${dataTestId}-empty`}>
+          {language === 'id' ? 'Tidak ada catatan' : 'No notes found'}
         </p>
       </div>
     );
@@ -64,9 +65,9 @@ function NotesList({
           data-testid={`${groupKey}-group`}
         >
           <div className="notes-group__header">
-            <h3>{formatGroupTitle(groupKey)}</h3>
-            <span data-testid={`${groupKey}-group-count`}>
-              {groupedItems.length} catatan
+            <h3 className="notes-group__title">{formatGroupTitle(groupKey)}</h3>
+            <span className="notes-group__count" data-testid={`${groupKey}-group-count`}>
+              {groupedItems.length} {language === 'id' ? 'catatan' : 'notes'}
             </span>
           </div>
 
@@ -77,7 +78,7 @@ function NotesList({
                 note={note}
                 onDelete={onDelete}
                 onArchive={onArchive}
-                onSelect={onSelect}
+                onSelect={handleSelectNote}
                 searchKeyword={searchKeyword}
               />
             ))}
