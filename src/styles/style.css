@@ -148,6 +148,30 @@ textarea {
   color: #fbbf24;
 }
 
+.add-note-button {
+  background-color: #f7b500; /* warna kuning emas */
+  color: var(--text);
+  font-weight: 600;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.add-note-button:hover {
+  background-color: #ffaa00;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+}
+
+.add-note-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .app-header {

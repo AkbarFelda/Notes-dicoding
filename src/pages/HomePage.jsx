@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { getActiveNotes, getArchivedNotes, addNote, deleteNote, archiveNote, unarchiveNote } from '../utils/network-data';
-import NoteInput from '../components/NoteInput';
+import { getActiveNotes, getArchivedNotes, deleteNote, archiveNote, unarchiveNote } from '../utils/network-data';
 import NotesList from '../components/NotesList';
 import LoadingIndicator from '../components/LoadingIndicator';
 import AuthContext from '../contexts/AuthContext';
@@ -43,12 +42,6 @@ const HomePage = () => {
     }
   };
 
-  const onAddNoteHandler = async ({ title, body }) => {
-    const note = await addNote({ title, body });
-    if (!note.error) {
-      setNotes((prevNotes) => [note.data, ...prevNotes]);
-    }
-  };
 
   const onDeleteHandler = (id) => {
     deleteNote(id);
@@ -107,7 +100,12 @@ const HomePage = () => {
       />
 
       <div className="note-app__body">
-        <NoteInput addNote={onAddNoteHandler} />
+        <button
+          className="add-note-button"
+          onClick={() => navigate('/notes/new')}
+        >
+          {language === 'en' ? 'Add Note' : 'Tambah Catatan'}
+        </button>
 
         {loadingNotes ? (
           <div className="loading-wrapper">

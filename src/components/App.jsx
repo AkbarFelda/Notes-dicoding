@@ -6,6 +6,7 @@ import RegisterPage from '../pages/Register';
 import HomePage from '../pages/HomePage';
 import ProtectedRoute from '../components/ProtectedRoute';
 import NoteDetail from '../pages/NoteDetail';
+import AddNotePage from '../pages/AddNotePage';
 
 function App() {
   return (
@@ -28,6 +29,11 @@ function App() {
           </ProtectedRoute>
         }
         />
+        <Route path="/notes/new" element={
+          <ProtectedRoute>
+            <AddNotePage />
+          </ProtectedRoute>
+        } />
       </Routes>
     </AuthProvider>
   );
