@@ -7,12 +7,19 @@ import HomePage from '../pages/HomePage';
 import ProtectedRoute from '../components/ProtectedRoute';
 import NoteDetail from '../pages/NoteDetail';
 import AddNotePage from '../pages/AddNotePage';
+import { getAccessToken } from '../utils/network-data';
 
 function App() {
+  const token = getAccessToken();
   return (
     <AuthProvider>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route
+          path="/"
+          element={
+            token ? <Navigate to="/home" replace /> : <Navigate to="/login" replace />
+          }
+        />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route

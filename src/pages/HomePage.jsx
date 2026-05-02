@@ -19,6 +19,12 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const searchQuery = queryParams.get('search') || '';
+    setSearchKeyword(searchQuery);
+  }, [location.search]);
+
+  useEffect(() => {
     if (currentUser && currentUser.accessToken) {
       fetchNotes();
     }
@@ -59,7 +65,10 @@ const HomePage = () => {
     );
   };
 
-  const onSearchHandler = (keyword) => setSearchKeyword(keyword);
+  const onSearchHandler = (keyword) => {
+    setSearchKeyword(keyword);
+    navigate(`?search=${keyword}`);
+  };
 
   const filteredNotes = notes.filter((note) =>
     note.title.toLowerCase().includes(searchKeyword.toLowerCase()) ||

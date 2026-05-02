@@ -149,7 +149,7 @@ textarea {
 }
 
 .add-note-button {
-  background-color: #f7b500; /* warna kuning emas */
+  background-color: #f7b500; 
   color: var(--text);
   font-weight: 600;
   padding: 10px 20px;
@@ -172,7 +172,6 @@ textarea {
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .app-header {
     flex-direction: row;
@@ -812,3 +811,100 @@ textarea {
   100% { transform: rotate(360deg); }
 }
 
+.user-info {
+  position: relative;
+}
+
+.user-avatar {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #007bff;
+}
+
+.dropdown-menu button:hover {
+  text-decoration: underline;
+}
+
+.logout-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+}
+
+.popup-content button:hover {
+  background-color: #0056b3;
+}
+
+.notfound-container {
+  text-align: center;
+  padding: 50px;
+  background-color: #f4f4f9;
+  min-height: 100vh;
+}
+
+.notfound-heading {
+  font-size: 3rem;
+  color: #333;
+}
+
+.notfound-message {
+  font-size: 1.5rem;
+  color: #777;
+}
+
+.notfound-suggestion {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.notfound-home-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+}

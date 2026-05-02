@@ -1,13 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
-import AuthContext from '../contexts/AuthContext';
+import { getAccessToken } from '../utils/network-data';
 
 const ProtectedRoute = ({ children }) => {
-  const { currentUser } = useContext(AuthContext);
+  const token = getAccessToken();
 
-  console.log('Checking currentUser in ProtectedRoute:', currentUser);  // Cek apakah currentUser sudah terisi dengan accessToken
-
-  if (!currentUser || !currentUser.accessToken) {
+  if (!token) {
     return <Navigate to="/login" replace />;
   }
 
